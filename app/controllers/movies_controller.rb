@@ -15,11 +15,8 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
    
     if params[:ratings]
-      @ratings = params[:ratings].keys if !params[:ratings].instance_of? Array 
-      @ratings = params[:ratings]      if params[:ratings].instance_of? Array 
-      session[:ratings] = params[:ratings]      if params[:ratings].instance_of? Array 
-      session[:ratings] = params[:ratings].keys if !params[:ratings].instance_of? Array
-      # byebug
+      @ratings = params[:ratings].keys
+      session[:ratings] = params[:ratings].keys
     else
       @ratings = session[:ratings] || @all_ratings
       session[:ratings] ||= @all_ratings
@@ -28,6 +25,8 @@ class MoviesController < ApplicationController
     session[:sort] = params[:sort]   if  params[:sort]
     session[:sort] ||= 'id ASC'      if !params[:sort]
    
+    
+
     @movies = Movie.where(:rating => session[:ratings]).order(session[:sort])
     @hilite[session[:sort]]='hilite' if session[:sort]
    
