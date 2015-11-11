@@ -11,6 +11,9 @@ class MoviesController < ApplicationController
   end
 
   def index
+    # Works, but does not look dry to me!
+    # Any feedback?
+    
     @hilite = {}
     @all_ratings = Movie.all_ratings
    
@@ -23,14 +26,14 @@ class MoviesController < ApplicationController
       @ratings = session[:ratings] || @all_ratings
       session[:ratings] ||= @all_ratings
     end
-    
+
     session[:sort] = params[:sort]   if  params[:sort]
     session[:sort] ||= 'id ASC'      if !params[:sort]
     
     @movies = Movie.where(:rating => session[:ratings]).order(session[:sort])
     @hilite[session[:sort]]='hilite' if session[:sort]
 
-    if session[:ratings] != params[:sort] and session[:sort]!=params[:sort]
+    if session[:ratings] != params[:ratings] and session[:sort]!=params[:sort]
         redirect_to movies_path(sort: session[:sort], ratings: session[:ratings])
     end
    
