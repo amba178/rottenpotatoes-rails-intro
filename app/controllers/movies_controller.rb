@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
   def index
     # Works, but does not look dry to me!
     # Any feedback?
-    
+
     @hilite = {}
     @all_ratings = Movie.all_ratings
    
@@ -34,7 +34,7 @@ class MoviesController < ApplicationController
     @hilite[session[:sort]]='hilite' if session[:sort]
 
     if session[:ratings] != params[:ratings] and session[:sort]!=params[:sort]
-        redirect_to movies_path(sort: session[:sort], ratings: session[:ratings])
+      redirect_to movies_path(sort: session[:sort], ratings: session[:ratings])
     end
    
   end
