@@ -13,8 +13,7 @@ class MoviesController < ApplicationController
   def index
     @hilite = {}
     @all_ratings = Movie.all_ratings
-    # @ratings = session[:ratings] || @all_ratings
-
+   
     if params[:ratings]
       @ratings = params[:ratings].keys
       session[:ratings] = params[:ratings].keys
@@ -23,12 +22,9 @@ class MoviesController < ApplicationController
       session[:ratings] ||= @all_ratings
     end
 
-    # session[:sort] = params[:sort] if params[:sort] 
     session[:sort] = params[:sort]   if  params[:sort]
     session[:sort] ||= 'id ASC'      if !params[:sort]
-    # session[:rating]= params[:rating] || @all_ratings 
-    
-
+   
     @movies = Movie.where(:rating => session[:ratings]).order(session[:sort])
     @hilite[session[:sort]]='hilite' if session[:sort]
    
