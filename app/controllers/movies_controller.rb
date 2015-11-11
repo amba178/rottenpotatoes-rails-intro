@@ -15,8 +15,11 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
    
     if params[:ratings]
-      @ratings = params[:ratings].keys
-      session[:ratings] = params[:ratings].keys
+      @ratings = params[:ratings].keys if !params[:ratings].instance_of? Array 
+      @ratings = params[:ratings]      if params[:ratings].instance_of? Array 
+      session[:ratings] = params[:ratings]      if params[:ratings].instance_of? Array 
+      session[:ratings] = params[:ratings].keys if !params[:ratings].instance_of? Array
+      # byebug
     else
       @ratings = session[:ratings] || @all_ratings
       session[:ratings] ||= @all_ratings
